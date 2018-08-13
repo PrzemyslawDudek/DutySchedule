@@ -12,6 +12,4 @@ public class PlaceOfGuardEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
-    @Column(name = "is_assigned")
-    private boolean isAssigned;
 }

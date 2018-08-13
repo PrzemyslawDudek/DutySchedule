@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import pl.dudekjunior.DutySchedule.models.entities.TeacherEntity;
 import pl.dudekjunior.DutySchedule.models.repositories.TeacherRepository;
 
+import java.util.Optional;
+
 
 @Service
 public class TeacherService {
@@ -17,5 +19,9 @@ public class TeacherService {
 
     public Iterable<TeacherEntity> getAllTeachers(){
         return teacherRepository.findAll();
+    }
+
+    public Optional<TeacherEntity> findById(int teacherId) {
+        return teacherRepository.findById(teacherId);
     }
 }

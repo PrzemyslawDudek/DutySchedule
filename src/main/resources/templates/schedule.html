@@ -11,33 +11,44 @@
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col">
-                <div  th:each="day : ${days}">
+                <div  th:each="day : ${schedule.getDays()}">
 
-                    <h1 th:text="${day}">  </h1>
+                    <h1 th:text="${day.getDay()}">  </h1>
                     <table class="table table-dark">
 
                         <thead>
                         <tr>
-                            <th scope="col" th:text="${day}"></th>
-                            <th th:each="place : ${placesOfGuard}" th:text="${place.getName()}"></th>
+                            <th scope="col" th:text="${day.getDay()}"></th>
+                            <th th:each="place : ${day.getDutyBreaks().get(0).getPlaces()}" th:text="${place.getName()}"></th>
                         </tr>
                         </thead>
 
                         <tbody>
-                        <tr th:each="break : ${breaks}">
+                        <tr th:each="break : ${day.getDutyBreaks()}">
                             <th scope="row">Przerwa nr: <span th:text="${break.getBreakNumber()}"></span>
                                 <div th:text="${break.getBreakTime()}"></div>
                             </th>
-                            <td th:each="place : ${placesOfGuard}">
-                                <form th:action="'/addDuty/'
+                            <td th:each="place : ${break.getPlaces()}">
+                                <form th:if="${!place.isAssigned()}" th:action="'/addDuty/'
                                 + ${place.getId()} + '/'
-                                + ${break.getId()} + '/' + ${day}" method="post" th:object="${dutyForm}">
+                                + ${break.getId()} + '/' + ${day.getDay()}" method="post" th:object="${dutyForm}">
                                     <select  class="form-control" th:field="*{teacherId}">
-                                        <!--<option selected>Nauczyciel...</option>-->
-                                        <option th:each="teacher : ${teachers}" th:text="${teacher}" th:value="${teacher.getId()}"></option>
+                                        <option th:each="teacher : ${teachers}"
+                                                th:text="${teacher}"
+                                                th:value="${teacher.getId()}">
+                                        </option>
                                     </select>
                                     <button type="submit" class="btn btn-primary">Dodaj</button>
                                 </form>
+                                <div th:if="${place.isAssigned()}">
+
+                                    <div th:text="${place.getTeacher()}"></div>
+                                    <a th:href="'/deleteDuty/'
+                                        + ${place.getId()} + '/'
+                                        + ${break.getId()} + '/' + ${day.getDay()}">
+                                        <button type="button" class="btn btn-danger">Usuń</button>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                         </tbody>

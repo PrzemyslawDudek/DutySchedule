@@ -14,31 +14,26 @@ import pl.dudekjunior.DutySchedule.models.servicies.*;
 public class ScheduleController {
 
     private final TeacherService teacherService;
-    private final BreakService breakService;
-    private final PlaceOfGaurdService placeOfGaurdService;
-    private final DayService dayService;
+
     private final DutyService dutyService;
+    private final ScheduleService scheduleService;
 
     @Autowired
     public ScheduleController(TeacherService teacherService,
-                              BreakService breakService,
-                              PlaceOfGaurdService placeOfGaurdService,
-                              DayService dayService,
-                              DutyService dutyService) {
+                              DutyService dutyService,
+                              ScheduleService scheduleService) {
         this.teacherService = teacherService;
-        this.breakService = breakService;
-        this.placeOfGaurdService = placeOfGaurdService;
-        this.dayService = dayService;
         this.dutyService = dutyService;
+        this.scheduleService = scheduleService;
     }
 
     @GetMapping("/")
     public String schedule(Model model){
         model.addAttribute("dutyForm", new DutyForm());
-        model.addAttribute("placesOfGuard", placeOfGaurdService.getAllPlaces());
+
         model.addAttribute("teachers", teacherService.getAllTeachers());
-        model.addAttribute("breaks", breakService.getAllBreaks());
-        model.addAttribute("days", dayService.getDaysOfWeek());
+
+        model.addAttribute("schedule", scheduleService.createSchedule());
         return "schedule";
     }
 
@@ -51,6 +46,16 @@ public class ScheduleController {
             return "redirect:/";
         }
         dutyService.addDuty(dutyForm, placeId, breakId, day);
+        return "redirect:/";
+    }
+
+    @GetMapping("/deleteDuty/{placeId}/{breakId}/{day}")
+    public String deleteDuty(@ModelAttribute("dutyForm") DutyForm dutyForm,
+                          @PathVariable("placeId") int placeId,
+                          @PathVariable("breakId") int breakId,
+                          @PathVariable("day") String day){
+
+        dutyService.deleteDuty(day, breakId, placeId);
         return "redirect:/";
     }
 }

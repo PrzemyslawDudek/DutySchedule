@@ -11,9 +11,9 @@ public class DutyModel {
     private boolean isAssigned;
     private DutyEntity dutyEntity;
 
-    public DutyModel(String day, int breakId, int placeId){
-        this.day = day;
-        this.breakId = breakId;
-        this.placeId = placeId;
+    public DutyModel(DayModel dayModel, BreakModel breakModel, PlaceModel placeModel){
+        this.day = dayModel.getDay();
+        this.breakId = breakModel.getId();
+        this.placeId = placeModel.getId();
     }
 }

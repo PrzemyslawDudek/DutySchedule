@@ -28,7 +28,17 @@ public class DutyService {
         return dutyEntity;
     }
 
-    public boolean isDutyIsAssigned(String day, int breakNumber, int placeNumber){
+    public boolean isDutyPlaceIsAssigned(String day, int breakNumber, int placeNumber){
         return dutyRepository.existsByDayAndBreakIdAndPlaceId(day, breakNumber, placeNumber);
+    }
+
+    public int getTeacherIdByDayBreakPlace(String day, int breakId, int placeId) {
+        DutyEntity dutyEntity = dutyRepository.findByDayAndBreakIdAndPlaceId(day, breakId, placeId);
+        return dutyEntity.getTeacherId();
+    }
+
+    public void deleteDuty(String day, int breakId, int placeId) {
+        DutyEntity dutyEntity = dutyRepository.findByDayAndBreakIdAndPlaceId(day, breakId, placeId);
+        dutyRepository.deleteById(dutyEntity.getId());
     }
 }
