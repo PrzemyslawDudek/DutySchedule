@@ -1,9 +1,12 @@
 package pl.dudekjunior.DutySchedule.models.servicies;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import pl.dudekjunior.DutySchedule.models.entities.DutyEntity;
 import pl.dudekjunior.DutySchedule.models.forms.DutyForm;
 import pl.dudekjunior.DutySchedule.models.repositories.DutyRepository;
+
+import java.util.List;
 
 @Service
 public class DutyService {
@@ -28,8 +31,8 @@ public class DutyService {
         return dutyEntity;
     }
 
-    public boolean isDutyPlaceIsAssigned(String day, int breakNumber, int placeNumber){
-        return dutyRepository.existsByDayAndBreakIdAndPlaceId(day, breakNumber, placeNumber);
+    public boolean isDutyPlaceIsAssigned(String day, int breakId, int placeId){
+        return dutyRepository.existsByDayAndBreakIdAndPlaceId(day, breakId, placeId);
     }
 
     public int getTeacherIdByDayBreakPlace(String day, int breakId, int placeId) {
@@ -40,5 +43,10 @@ public class DutyService {
     public void deleteDuty(String day, int breakId, int placeId) {
         DutyEntity dutyEntity = dutyRepository.findByDayAndBreakIdAndPlaceId(day, breakId, placeId);
         dutyRepository.deleteById(dutyEntity.getId());
+    }
+
+
+    public  List<DutyEntity>teacherDuties(int teacherId){
+        return dutyRepository.findByTeacherId(teacherId);
     }
 }

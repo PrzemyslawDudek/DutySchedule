@@ -24,4 +24,6 @@ public class TeacherService {
     public Optional<TeacherEntity> findById(int teacherId) {
         return teacherRepository.findById(teacherId);
     }
+
+
 }

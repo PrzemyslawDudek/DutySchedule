@@ -58,7 +58,10 @@
 
             <div class="col col-lg-2">
                 <h1>Nauczyciele</h1>
-                <div th:each="teacher : ${teachers}" th:text="${teacher}"></div>
+                <div th:each="teacher : ${teacherModels}" >
+                    <span th:text="${teacher.getName()}"> </span> <span th:text="${teacher.getSurname()}"> </span>
+                    <span th:text="${teacher.getDutyTime()}"></span>
+                </div>
             </div>
         </div>
     </div>

@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class DutyForm {
+
     private int id;
     private String day;
     private int breakId;

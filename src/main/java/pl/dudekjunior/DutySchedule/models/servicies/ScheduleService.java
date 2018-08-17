@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 import pl.dudekjunior.DutySchedule.models.*;
 import pl.dudekjunior.DutySchedule.models.entities.BreakEntity;
 import pl.dudekjunior.DutySchedule.models.entities.PlaceOfGuardEntity;
+import pl.dudekjunior.DutySchedule.models.entities.TeacherEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -66,5 +68,21 @@ public class ScheduleService {
             schedule.getDays().add(dayModel);
         }
         return schedule;
+    }
+
+    public List<TeacherModel> getTeacherModels(){
+        Iterable<TeacherEntity> teacherEntities = teacherService.getAllTeachers();
+        List<TeacherModel> teacherModels = new ArrayList<>();
+
+        for (TeacherEntity teacherEntity : teacherEntities) {
+            TeacherModel teacher = new TeacherModel();
+            teacher.setId(teacherEntity.getId());
+            teacher.setName(teacherEntity.getName());
+            teacher.setSurname(teacherEntity.getSurname());
+            teacher.setDutyTime(breakService.teacherDutyTime(dutyService.teacherDuties(teacherEntity.getId())));
+            teacherModels.add(teacher);
+        }
+
+        return teacherModels;
     }
 }

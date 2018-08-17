@@ -29,9 +29,12 @@ public class ScheduleController {
 
     @GetMapping("/")
     public String schedule(Model model){
+
         model.addAttribute("dutyForm", new DutyForm());
 
         model.addAttribute("teachers", teacherService.getAllTeachers());
+
+        model.addAttribute("teacherModels", scheduleService.getTeacherModels());
 
         model.addAttribute("schedule", scheduleService.createSchedule());
         return "schedule";
@@ -42,9 +45,10 @@ public class ScheduleController {
                           @PathVariable("placeId") int placeId,
                           @PathVariable("breakId") int breakId,
                           @PathVariable("day") String day){
-//        if(dutyForm.getTeacherId() == 0){
-//            return "redirect:/";
-//        }
+
+        if(dutyForm.getTeacherId() == 0){
+            return "redirect:/";
+        }
         dutyService.addDuty(dutyForm, placeId, breakId, day);
         return "redirect:/";
     }
