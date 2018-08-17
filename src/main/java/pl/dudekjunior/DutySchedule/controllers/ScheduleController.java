@@ -42,9 +42,9 @@ public class ScheduleController {
                           @PathVariable("placeId") int placeId,
                           @PathVariable("breakId") int breakId,
                           @PathVariable("day") String day){
-        if(dutyForm.getTeacherId() == 0){
-            return "redirect:/";
-        }
+//        if(dutyForm.getTeacherId() == 0){
+//            return "redirect:/";
+//        }
         dutyService.addDuty(dutyForm, placeId, breakId, day);
         return "redirect:/";
     }
