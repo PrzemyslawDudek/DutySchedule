@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Break</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container">
+
+        <form action="/addBreak" method="post" th:object="${breakForm}">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="ControlSelect1">Number Przerwy</label>
+                        <select class="form-control" id="ControlSelect1" th:field="*{breakNumber}">
+                            <option th:value="${0}">0</option>
+                            <option th:value="${1}">1</option>
+                            <option th:value="${2}">2</option>
+                            <option th:value="${3}">3</option>
+                            <option th:value="${4}">4</option>
+                            <option th:value="${5}">5</option>
+                            <option th:value="${6}">6</option>
+                            <option th:value="${7}">7</option>
+                            <option th:value="${8}">8</option>
+                            <option th:value="${9}">9</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="ControlSelect2">Długość</label>
+                        <select class="form-control" id="ControlSelect2" th:field="*{breakLength}">
+                            <option th:value="${5}">5</option>
+                            <option th:value="${10}">10</option>
+                            <option th:value="${15}">15</option>
+                            <option th:value="${20}">20</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="ControlText">Wpisz czas dzwonków: 00:00 - 00:00</label>
+                <input class="form-control" type="text" id="ControlText" placeholder="00:00 - 00:00" th:field="*{breakTime}">
+            </div>
+            <button type="submit" class="btn btn-primary">Dodaj</button>
+        </form>
+        <hr>
+        <!--<a th:href="/">-->
+            <!--<button  class="btn btn-primary">Wróć</button>-->
+        <!--</a>-->
+    </div>
+</body>
+</html>

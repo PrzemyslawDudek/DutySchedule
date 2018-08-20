@@ -1,6 +1,6 @@
 package pl.dudekjunior.DutySchedule.models.servicies;
 
-import org.springframework.data.jpa.repository.Query;
+
 import org.springframework.stereotype.Service;
 import pl.dudekjunior.DutySchedule.models.entities.DutyEntity;
 import pl.dudekjunior.DutySchedule.models.forms.DutyForm;

@@ -36,6 +36,10 @@ public class ScheduleController {
 
         model.addAttribute("teacherModels", scheduleService.getTeacherModels());
 
+        model.addAttribute("teacherMaxTime", scheduleService.getTeacherWithMostOfBreakTime());
+
+        model.addAttribute("teacherMinTime", scheduleService.getTeacherWithLeastBreakTime());
+
         model.addAttribute("schedule", scheduleService.createSchedule());
         return "schedule";
     }

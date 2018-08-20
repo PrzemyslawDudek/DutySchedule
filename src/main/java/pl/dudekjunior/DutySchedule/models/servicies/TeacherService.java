@@ -5,7 +5,8 @@ import org.springframework.stereotype.Service;
 import pl.dudekjunior.DutySchedule.models.entities.TeacherEntity;
 import pl.dudekjunior.DutySchedule.models.repositories.TeacherRepository;
 
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -17,8 +18,12 @@ public class TeacherService {
         this.teacherRepository = teacherRepository;
     }
 
-    public Iterable<TeacherEntity> getAllTeachers(){
-        return teacherRepository.findAll();
+    public List<TeacherEntity> getAllTeachers(){
+        List<TeacherEntity> teachers = new ArrayList<>();
+        for(TeacherEntity teacher : teacherRepository.findAll()){
+            teachers.add(teacher);
+        }
+        return teachers.stream().sorted(Comparator.comparing(TeacherEntity::getName)).collect(Collectors.toList());
     }
 
     public Optional<TeacherEntity> findById(int teacherId) {
