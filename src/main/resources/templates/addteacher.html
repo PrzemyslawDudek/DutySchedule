@@ -1,14 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Add Teacher</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
+    <style type="text/css">body {padding-top: 70px;}</style>
 </head>
 <body>
+<nav class="navbar fixed-top navbar-light bg-light nav justify-content-center" >
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link" href="/">Wróć</a>
+        </li>
+    </ul>
+</nav>
+
 <div class="container">
-    <button type="submit" class="btn btn-primary">Dodaj</button>
+    <form action="/addTeacher" method="post" th:object="${teacherForm}">
+        <div class="form-group">
+            <label for="ControlText">Imię</label>
+            <input class="form-control" type="text" id="ControlText" placeholder="Imię" th:field="*{name}">
+        </div>
+        <div class="form-group">
+            <label for="ControlText2">Nazwisko</label>
+            <input class="form-control" type="text" id="ControlText2" placeholder="Nazwisko" th:field="*{surname}">
+        </div>
+        <button type="submit" class="btn btn-primary">Dodaj</button>
+    </form>
+    <hr>
+    <a href="/">
+        <button  class="btn btn-primary">Wróć</button>
+    </a>
 </div>
+
+
 </body>
 </html>

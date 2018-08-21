@@ -3,6 +3,7 @@ package pl.dudekjunior.DutySchedule.models.servicies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.dudekjunior.DutySchedule.models.entities.TeacherEntity;
+import pl.dudekjunior.DutySchedule.models.forms.TeacherForm;
 import pl.dudekjunior.DutySchedule.models.repositories.TeacherRepository;
 
 import java.util.*;
@@ -26,9 +27,15 @@ public class TeacherService {
         return teachers.stream().sorted(Comparator.comparing(TeacherEntity::getName)).collect(Collectors.toList());
     }
 
-    public Optional<TeacherEntity> findById(int teacherId) {
+    Optional<TeacherEntity> findById(int teacherId) {
         return teacherRepository.findById(teacherId);
     }
 
 
+    public void addTeacher(TeacherForm teacherForm) {
+        TeacherEntity teacherEntity = new TeacherEntity();
+        teacherEntity.setName(teacherForm.getName());
+        teacherEntity.setSurname(teacherForm.getSurname());
+        teacherRepository.save(teacherEntity);
+    }
 }

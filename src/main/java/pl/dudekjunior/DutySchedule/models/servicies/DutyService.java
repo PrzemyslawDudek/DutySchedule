@@ -31,11 +31,11 @@ public class DutyService {
         return dutyEntity;
     }
 
-    public boolean isDutyPlaceIsAssigned(String day, int breakId, int placeId){
+    boolean isDutyPlaceIsAssigned(String day, int breakId, int placeId){
         return dutyRepository.existsByDayAndBreakIdAndPlaceId(day, breakId, placeId);
     }
 
-    public int getTeacherIdByDayBreakPlace(String day, int breakId, int placeId) {
+    int getTeacherIdByDayBreakPlace(String day, int breakId, int placeId) {
         DutyEntity dutyEntity = dutyRepository.findByDayAndBreakIdAndPlaceId(day, breakId, placeId);
         return dutyEntity.getTeacherId();
     }
@@ -46,7 +46,7 @@ public class DutyService {
     }
 
 
-    public  List<DutyEntity>teacherDuties(int teacherId){
+    List<DutyEntity>teacherDuties(int teacherId){
         return dutyRepository.findByTeacherId(teacherId);
     }
 }

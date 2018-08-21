@@ -20,7 +20,7 @@ public class BreakService {
         this.breakRepository = breakRepository;
     }
 
-    public List<BreakEntity> getAllBreaks(){
+    List<BreakEntity> getAllBreaks(){
         List<BreakEntity> breakEntities = new ArrayList<>();
         for(BreakEntity breakEntity : breakRepository.findAll()){
             breakEntities.add(breakEntity);
@@ -28,7 +28,7 @@ public class BreakService {
         return breakEntities.stream().sorted(Comparator.comparing(BreakEntity::getBreakNumber)).collect(Collectors.toList());
     }
 
-    public int teacherDutyTime(List<DutyEntity> teacherDuties){
+    int teacherDutyTime(List<DutyEntity> teacherDuties){
         int sum = 0;
         for (DutyEntity duty: teacherDuties) {
             sum = sum + breakRepository.findById(duty.getBreakId()).get().getBreakLength();
