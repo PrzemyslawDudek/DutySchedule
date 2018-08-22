@@ -4,9 +4,16 @@
     <meta charset="UTF-8">
     <title>Add Break</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
+    <style type="text/css">body {padding-top: 70px;}</style>
 </head>
 <body>
+    <nav class="navbar fixed-top navbar-light bg-light nav justify-content-center" >
+        <ul class="nav justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Wróć</a>
+            </li>
+        </ul>
+    </nav>
     <div class="container">
 
         <form action="/addBreak" method="post" th:object="${breakForm}">

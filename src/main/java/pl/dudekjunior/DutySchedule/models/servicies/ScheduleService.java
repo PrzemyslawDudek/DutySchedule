@@ -40,15 +40,17 @@ public class ScheduleService {
 
     public ScheduleModel createSchedule(){
         ScheduleModel schedule = new ScheduleModel();
-        List<String> days = dayService.getDaysOfWeek();
-        List<BreakEntity> breaks = breakService.getAllBreaks();
-        Iterable<PlaceOfGuardEntity> placesOfGuard = placeOfGaurdService.getAllPlaces();
+        List<TeacherEntity> teacherEntities = teacherService.getAllTeachers();
+        schedule.setTeacherEntities(teacherEntities);
+        schedule.setTeacherModelsWithDutyTime(getTeacherModelsWithDutyTime(teacherEntities));
+        schedule.setTeacherWithMaxTime(getTeacherWithMostOfBreakTime(teacherEntities));
+        schedule.setTeacherWithMinTime(getTeacherWithLeastBreakTime(teacherEntities));
 
-        for(String day : days){
+        for(String day : dayService.getDaysOfWeek()){
             DayModel dayModel = new DayModel(day);
-            for(BreakEntity breakEntity : breaks){
+            for(BreakEntity breakEntity : breakService.getAllBreaks()){
                 BreakModel breakModel = new BreakModel(breakEntity);
-                for(PlaceOfGuardEntity placeOfGuardEntity : placesOfGuard){
+                for(PlaceOfGuardEntity placeOfGuardEntity : placeOfGaurdService.getAllPlaces()){
                     PlaceModel placeModel = new PlaceModel(placeOfGuardEntity);
                     checkPlaceIsAssigned(day, breakEntity, placeOfGuardEntity, placeModel);
                     breakModel.getPlaces().add(placeModel);
@@ -68,33 +70,39 @@ public class ScheduleService {
         }
     }
 
-    public List<TeacherModel> getTeacherModels(){
-        Iterable<TeacherEntity> teacherEntities = teacherService.getAllTeachers();
+    private List<TeacherModel> getTeacherModelsWithDutyTime(List<TeacherEntity> teacherEntities){
+
         List<TeacherModel> teacherModels = new ArrayList<>();
 
         changeIterableToList(teacherEntities, teacherModels);
 
         teacherModels.sort(Comparator.comparing(TeacherModel::getDutyTime));
+
         return teacherModels;
     }
 
-    private void changeIterableToList(Iterable<TeacherEntity> teacherEntities, List<TeacherModel> teacherModels) {
+    private void changeIterableToList(List<TeacherEntity> teacherEntities, List<TeacherModel> teacherModels) {
         for (TeacherEntity teacherEntity : teacherEntities) {
             TeacherModel teacher = new TeacherModel();
             teacher.setId(teacherEntity.getId());
             teacher.setName(teacherEntity.getName());
             teacher.setSurname(teacherEntity.getSurname());
-            teacher.setDutyTime(breakService.teacherDutyTime(dutyService.teacherDuties(teacherEntity.getId())));
+            teacher.setDutyTime(setTeacherDutyTime(teacherEntity));
             teacherModels.add(teacher);
         }
     }
 
-    public TeacherModel getTeacherWithLeastBreakTime(){
-        return getTeacherModels().stream().min(Comparator.comparing(TeacherModel::getDutyTime)).get();
+    private int setTeacherDutyTime(TeacherEntity teacherEntity){
+        int maxDutyTime = (int)(120 * teacherEntity.getWorkTime());
+        int dutyTime = breakService.teacherDutyTime(dutyService.teacherDuties(teacherEntity.getId()));
+        return (dutyTime * 100/maxDutyTime);
     }
 
-    public TeacherModel getTeacherWithMostOfBreakTime(){
+    private TeacherModel getTeacherWithLeastBreakTime(List<TeacherEntity> teacherEntities){
+        return getTeacherModelsWithDutyTime(teacherEntities).stream().min(Comparator.comparing(TeacherModel::getDutyTime)).get();
+    }
 
-        return getTeacherModels().stream().max(Comparator.comparing(TeacherModel::getDutyTime)).get();
+    private TeacherModel getTeacherWithMostOfBreakTime(List<TeacherEntity> teacherEntities){
+        return getTeacherModelsWithDutyTime(teacherEntities).stream().max(Comparator.comparing(TeacherModel::getDutyTime)).get();
     }
 }

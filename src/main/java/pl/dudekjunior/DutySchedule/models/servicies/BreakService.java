@@ -36,8 +36,12 @@ public class BreakService {
         return sum;
     }
 
-    public void addBreak(BreakForm breakForm) {
-        breakRepository.save(createBreakEntity(breakForm));
+    public boolean addBreak(BreakForm breakForm) {
+        if(breakRepository.count() <= 10){
+            breakRepository.save(createBreakEntity(breakForm));
+            return true;
+        }
+        return false;
     }
 
     private BreakEntity createBreakEntity(BreakForm breakForm){

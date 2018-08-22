@@ -19,7 +19,7 @@ public class TeacherService {
         this.teacherRepository = teacherRepository;
     }
 
-    public List<TeacherEntity> getAllTeachers(){
+    List<TeacherEntity> getAllTeachers(){
         List<TeacherEntity> teachers = new ArrayList<>();
         for(TeacherEntity teacher : teacherRepository.findAll()){
             teachers.add(teacher);
@@ -36,6 +36,7 @@ public class TeacherService {
         TeacherEntity teacherEntity = new TeacherEntity();
         teacherEntity.setName(teacherForm.getName());
         teacherEntity.setSurname(teacherForm.getSurname());
+        teacherEntity.setWorkTime(teacherForm.getWorkTime());
         teacherRepository.save(teacherEntity);
     }
 }

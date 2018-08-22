@@ -28,8 +28,10 @@ public class BreakController {
 
     @PostMapping("/addBreak")
     public String addBreak(@ModelAttribute("breakForm") BreakForm breakForm){
-        breakService.addBreak(breakForm);
+        if(breakService.addBreak(breakForm)){
+            return "redirect:/";
+        }
 
-        return "redirect:/";
+        return "/addBreak";
     }
 }

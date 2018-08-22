@@ -19,9 +19,13 @@ public class PlaceOfGaurdService {
         return placeOfGuardRepository.findAll();
     }
 
-    public void addPlace(PlaceForm placeForm) {
-        PlaceOfGuardEntity place = new PlaceOfGuardEntity();
-        place.setName(placeForm.getName());
-        placeOfGuardRepository.save(place);
+    public boolean addPlace(PlaceForm placeForm) {
+        if(placeOfGuardRepository.count() <= 5){
+            PlaceOfGuardEntity place = new PlaceOfGuardEntity();
+            place.setName(placeForm.getName());
+            placeOfGuardRepository.save(place);
+            return true;
+        }
+        return false;
     }
 }

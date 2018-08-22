@@ -13,6 +13,8 @@ public class TeacherEntity {
     private int id;
     private String name;
     private String surname;
+    @Column(name = "work_time")
+    private double workTime;
 
     @Override
     public String toString() {

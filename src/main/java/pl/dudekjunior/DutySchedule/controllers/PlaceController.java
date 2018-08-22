@@ -27,7 +27,9 @@ public class PlaceController {
 
     @PostMapping("/addPlace")
     public String addPlace(@ModelAttribute("placeForm") PlaceForm placeForm){
-        placeOfGaurdService.addPlace(placeForm);
-        return "redirect:/";
+        if(placeOfGaurdService.addPlace(placeForm)){
+            return "redirect:/";
+        }
+        return "/addPlace";
     }
 }
